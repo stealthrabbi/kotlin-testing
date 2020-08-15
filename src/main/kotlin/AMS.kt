@@ -22,16 +22,21 @@ fun main(args: Array<String>) {
     println(fitMoreFish(9.0, listOf(1,1,3), 3))
     println(fitMoreFish(10.0, listOf(), 7, true))
 
-    for (i in 1..10) {
+    var yourFortune = ""
+
+//    for (i in 1..10) {
+//    repeat(10) {
+    while (yourFortune != "Take it easy and enjoy life!") {
+
         val birthday = getBirthday()
-        var yourFortune = getFortuneCookie(birthday)
+        yourFortune = getFortuneCookie(birthday)
         println(yourFortune)
 
         shouldChangeWater("hellO", dirty = 50)
 
-        if (yourFortune == "Take it easy and enjoy life!") {
-            break
-        }
+//        if (yourFortune == "Take it easy and enjoy life!") {
+//            return
+//        }
 
     }
 }
@@ -97,9 +102,21 @@ fun fishFood(day: String): String {
 fun shouldChangeWater(
         day: String,
         temperature: Int = 22,
-        dirty: Int = 20): Boolean {
+        dirty: Int = getDirtySensorReading()): Boolean {
+
+    return when {
+        isTooHot(temperature) -> true;
+        dirty > 30 -> true;
+        day == "Sunday" -> true
+        else -> false
+    }
+
     return true
 }
+
+fun isTooHot(temperature: Int) = temperature > 30
+
+fun getDirtySensorReading() = 20
 
 fun fitMoreFish(tankSizeGallons : Double, currentFish : List<Int>, newFishLength : Int = 2, hasDecorations: Boolean = true) : Boolean{
     var scaleFactor = if (hasDecorations) 0.8 else 1.0
